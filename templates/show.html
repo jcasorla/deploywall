@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <div class='container'>
+            {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+            {% if messages %}                            <!-- check if there are any messages -->
+                {% for message in messages %}            <!-- loop through the messages -->
+                    <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <h1>Welcome, you've been logged in, {{session['name']}}</h1>                
+            <hr>
+
+            <div class='row'>
+                
+
+                <div class="col-lg">
+                    <h1>Add a Favorite Book</h1>
+                    <form action="/books/new" method="POST">
+                        <p>Title:<input type="text" name="title"></p>
+                        <p>Description: <textarea name="description" id="" cols="30" rows="2"></textarea></p>
+                        <button type="submit" class="btn btn-danger">Add</button>
+                    </form>
+
+
+                </div>
+                <div class="col-lg">
+                    <h1>All Books</h1>
+                    {% for one_book in all_books %}
+                    <a href="/books/{{one_book['id']}}">{{one_book["title"]}}</a>
+                    <p>Added by: {{one_book["first_name"]}} {{one_book["last_name"]}}</p>
+                    {% if session['id']== one_book['user_id'] %}
+                        <p>This is one of your favorites </p>
+                        
+
+                    {% else %}
+                        <a href="/books/{{one_book['id']}}/fav">add to favorites</a>
+                        
+                    {% endif %}
+                    <hr>
+
+                    
+    
+                    {% endfor %}
+
+                </div>
+            </div>
+            <a href="/logout">logout</a>
+       </div>
+    </body>
+
+
+
+</html>

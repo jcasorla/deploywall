@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <div class='container'>
+
+            {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+            {% if messages %}                            <!-- check if there are any messages -->
+                {% for message in messages %}            <!-- loop through the messages -->
+                    <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <h1>Welcome, you've been logged in, {{session['name']}}</h1>                
+            <hr>
+
+            <div class='row'>
+                
+
+                <div class="col-lg">
+                    
+
+                    {% if session['id']== book['user_id'] %}
+                    <form action="/books/{{book['id']}}/update" method="POST">
+                        <p>Title:<input type="text" name="title" value="{{book['title']}}"></p>
+                        <p>Added by: {{book['first_name']}} {{book['last_name']}}</p>
+                        <p>Added on: {{book['created_at']}}</p>
+                        <p>Last updated on: {{book['updated_at']}}</p>
+                        <p>Description: <textarea name="description" id="" cols="30" rows="2">{{book['description']}}</textarea></p>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a class="btn btn-danger" href="/books/{{book['id']}}/delete">Delete</a>
+                    </form>
+                    
+                    {% else %}
+                    <h3>Title: {{book['title']}}</h3>
+                    <p>Added by: {{book['first_name']}} {{book['last_name']}}</p>
+                    <p>Added on: {{book['created_at']}}</p>
+                    <p>Last updated on: {{book['updated_at']}}</p>
+                    <p>description {{book['description']}}</p>
+                    {% endif %}
+
+
+                </div>
+                <div class="col-lg">
+                    <h3>Users Who Like this Book</h3>
+                    {% set foo = True %}
+                    {% set vars = {'foo': False} %}
+
+
+                   
+
+                    {% for one_user in fav_users %}
+                        {% if session['id']|string()== one_user['user_id']|string()  %}
+                            <tr><td><li>{{one_user["first_name"]}} {{one_user["last_name"]}} | <a href="/books/{{book['id']}}/unfav">unfavorite</a></li></td></tr>
+                        {% endif %}
+                        
+                        {% if (session['id']|string() != one_user['user_id']|string())  %}
+                            <tr><td><li>{{one_user["first_name"]}} {{one_user["last_name"]}} </li></td></tr>
+                        {% endif %}
+
+                    
+                    {% endfor %}
+                    
+                   
+                    <a href="/books/{{book['id']}}/fav">add to favorites</a>
+
+                    
+
+                    
+
+
+                </div>
+            </div>
+            <a href="/logout">logout</a>
+       </div>
+    </body>
+
+
+
+</html>

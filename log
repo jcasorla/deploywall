@@ -1,0 +1,17 @@
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Running Query: select b.id,b.title,u.first_name,u.last_name,u.id as user_id from books b join users u on b.uploaded_by_id=u.id;
+Running Query: select * from books where title='C++'
+<class 'list'>
+Running Query: select b.id,b.title,u.first_name,u.last_name,u.id as user_id from books b join users u on b.uploaded_by_id=u.id;
+Running Query: select * from books where title='Game of Fire'
+<class 'tuple'>
+Running Query: insert into books (title,description,uploaded_by_id,created_at,updated_at)  values ('Game of Fire','ffsdsfdfdsfdsfdsdsf',3, NOW(),NOW());
+Running Query: insert into favorites (book_id,user_id)  values (23,3);
+Running Query: select b.id,b.title,u.first_name,u.last_name,u.id as user_id from books b join users u on b.uploaded_by_id=u.id;
+Running Query: select * from books where title='PERL'
+<class 'list'>
+Running Query: select b.id,b.title,u.first_name,u.last_name,u.id as user_id from books b join users u on b.uploaded_by_id=u.id;
